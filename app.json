@@ -14,9 +14,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -26,8 +24,11 @@
         "backgroundColor": "#FFFFFF"
       }
     },
+    "description": "A place for all stitchers around the globe.",
     "web": {
       "favicon": "./assets/favicon.png"
-    }
-  }
+    },
+    "sdkVersion": "46.0.0"
+  },
+  "name": "stitchers"
 }
