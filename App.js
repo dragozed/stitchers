@@ -1,24 +1,42 @@
 import { StatusBar } from "expo-status-bar";
 import {
-  Button,
   StyleSheet,
   Text,
-  TouchableWithoutFeedback,
+  TouchableHighlight,
   SafeAreaView,
   Image,
+  Button,
+  Alert,
 } from "react-native";
+import WelcomeScreen from "./app/screens/WelcomeScreen";
+import BottomBar from "./app/utilBars/BottomBar";
+import TopBar from "./app/utilBars/TopBar";
 
 export default function App() {
-  const handlePress = () => console.log("TextPressed");
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden={false} />
-      <Text numberOfLines={1} onPress={handlePress}>
-        Hello World!!
-      </Text>
-      <Button color="#884158" title="Button" accessibilityLabel="learnmore" />
-      <TouchableWithoutFeedback onPress={() => console.log("imagetapped")}>
+      <TopBar />
+      <WelcomeScreen />
+      <Button
+        color="#884158"
+        title="Yes/No Button"
+        onPress={() =>
+          Alert.alert("Title", "Message", [
+            { onPress: () => console.log("Yes"), text: "Yes" },
+            { onPress: () => console.log("No"), text: "No" },
+          ])
+        }
+      />
+      <Button
+        color="#884158"
+        title="Get Text Button"
+        onPress={() =>
+          Alert.prompt("Title", "Message", (text) => console.log(text))
+        }
+      />
+
+      <TouchableHighlight onPress={() => console.log("imagetapped")}>
         <Image
           source={{
             width: 200,
@@ -26,7 +44,8 @@ export default function App() {
             uri: "https://picsum.photos/200/300",
           }}
         />
-      </TouchableWithoutFeedback>
+      </TouchableHighlight>
+      <BottomBar />
     </SafeAreaView>
   );
 }
@@ -36,6 +55,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
 });
