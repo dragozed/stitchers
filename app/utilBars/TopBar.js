@@ -21,9 +21,10 @@ function TopBar(props) {
 
 const styles = StyleSheet.create({
   topbar: {
+    position: "fixed",
+    top: 0,
     width: "100%",
     height: 50,
-    backgroundColor: "white",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

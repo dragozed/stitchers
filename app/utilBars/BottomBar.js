@@ -24,16 +24,22 @@ function BottomBar(props) {
 
 const styles = StyleSheet.create({
   bottombar: {
-    width: "100%",
-    height: 50,
-    backgroundColor: "green",
-    borderTopLeftRadius: "15%",
-    borderTopRightRadius: "15%",
+    position: "fixed",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    bottom: 0,
+    width: "100%",
+    height: 50,
+    backgroundColor: "#FEA500",
+    borderTopLeftRadius: "15%",
+    borderTopRightRadius: "15%",
     paddingLeft: "5%",
     paddingRight: "5%",
+    borderTopWidth: 3,
+    borderLeftWidth: 3,
+    borderRightWidth: 3,
+    borderColor: "#DC9300",
   },
 });
 
