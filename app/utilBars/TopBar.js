@@ -1,16 +1,34 @@
 import React from "react";
-import { Text, StyleSheet } from "react-native";
+import {
+  Image,
+  TouchableWithoutFeedback,
+  StyleSheet,
+  View,
+} from "react-native";
 
 function TopBar(props) {
-  return <Text style={styles.topbar}>I am TopBar</Text>;
+  return (
+    <View style={styles.topbar}>
+      <TouchableWithoutFeedback onPress={() => console.log("Stitchers Tapped")}>
+        <Image
+          style={{ width: 48, height: 48 }}
+          source={require("../assets/stitchers-64.png")}
+        />
+      </TouchableWithoutFeedback>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   topbar: {
     width: "100%",
     height: 50,
-    backgroundColor: "red",
-    textAlign: "center",
+    backgroundColor: "white",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingLeft: "5%",
+    paddingRight: "5%",
   },
 });
 export default TopBar;
