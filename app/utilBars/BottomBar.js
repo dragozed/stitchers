@@ -6,7 +6,7 @@ import {
   View,
 } from "react-native";
 
-function BottomBar(props) {
+export const BottomBar = () => {
   return (
     <View style={styles.bottombar}>
       <TouchableWithoutFeedback onPress={() => console.log("Home Tapped")}>
@@ -20,7 +20,7 @@ function BottomBar(props) {
       </TouchableWithoutFeedback>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   bottombar: {
@@ -42,5 +42,3 @@ const styles = StyleSheet.create({
     borderColor: "#DC9300",
   },
 });
-
-export default BottomBar;

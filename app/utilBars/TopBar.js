@@ -6,7 +6,7 @@ import {
   View,
 } from "react-native";
 
-function TopBar(props) {
+export const TopBar = () => {
   return (
     <View style={styles.topbar}>
       <TouchableWithoutFeedback onPress={() => console.log("Stitchers Tapped")}>
@@ -17,7 +17,7 @@ function TopBar(props) {
       </TouchableWithoutFeedback>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   topbar: {
@@ -32,4 +32,3 @@ const styles = StyleSheet.create({
     paddingRight: "5%",
   },
 });
-export default TopBar;
