@@ -5,6 +5,7 @@ import {
   Modal,
   StyleSheet,
   TouchableHighlight,
+  TextInput,
 } from "react-native";
 
 export const WelcomeScreen = () => {
@@ -28,7 +29,17 @@ export const WelcomeScreen = () => {
         }}
       >
         <View style={styles.loginModal}>
-          <Text>asddasd</Text>
+          <TextInput
+            placeholderTextColor={"black"}
+            style={styles.textInput}
+            placeholder="Email"
+          />
+          <TextInput
+            placeholderTextColor={"black"}
+            style={styles.textInput}
+            placeholder="Password"
+            secureTextEntry={true}
+          />
           <TouchableHighlight
             style={styles.button}
             onPress={() => setIsLoginOpen(false)}
@@ -81,5 +92,14 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.75,
     bottom: "-20%",
+  },
+  textInput: {
+    width: "60%",
+    paddingVertical: 10,
+    borderRadius: "10%",
+    borderWidth: 3,
+    borderColor: "#260E6B",
+    backgroundColor: "#FEA500",
+    textAlign: "center",
   },
 });
