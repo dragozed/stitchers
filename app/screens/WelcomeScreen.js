@@ -7,9 +7,34 @@ import {
   TouchableHighlight,
   TextInput,
 } from "react-native";
+import axios from "axios";
 
-export const WelcomeScreen = () => {
+export const WelcomeScreen = (props) => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [infoText, setInfoText] = useState(
+    "Please enter your Username and Password"
+  );
+
+  const submitHandler = async () => {
+    let matchingFlag = false;
+
+    const getUsers = await axios.get("http://192.168.2.240:3000/users"); //localip instead of localhost
+    const found = getUsers.data.find((e) => e.userName === userName);
+    if (typeof found === "undefined") {
+      setInfoText("Username not found");
+    } else {
+      matchingFlag = found.password === password;
+      if (matchingFlag) {
+        //Login Successful
+        setInfoText("Login Succesful");
+        props.getScreenName("HomeScreen");
+      } else {
+        setInfoText("Username and Password do not match");
+      }
+    }
+  };
 
   return (
     <View style={styles.welcome}>
@@ -18,7 +43,7 @@ export const WelcomeScreen = () => {
         style={styles.button}
         onPress={() => setIsLoginOpen(true)}
       >
-        <Text style={{ color: "white" }}>Giriş</Text>
+        <Text style={{ color: "white" }}>Login</Text>
       </TouchableHighlight>
       <Modal
         animationType="slide"
@@ -29,23 +54,33 @@ export const WelcomeScreen = () => {
         }}
       >
         <View style={styles.loginModal}>
+          <Text style={styles.loginText}>Login</Text>
           <TextInput
             placeholderTextColor={"black"}
             style={styles.textInput}
-            placeholder="Email"
+            placeholder="Username"
+            onChangeText={setUserName}
           />
           <TextInput
             placeholderTextColor={"black"}
-            style={styles.textInput}
+            style={[styles.textInput, { marginTop: 5 }]}
             placeholder="Password"
             secureTextEntry={true}
+            onChangeText={setPassword}
           />
           <TouchableHighlight
-            style={styles.button}
+            style={[styles.button, { marginTop: 10 }]}
+            onPress={submitHandler}
+          >
+            <Text style={{ color: "white" }}>Submit</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={[styles.button, { marginTop: 5 }]}
             onPress={() => setIsLoginOpen(false)}
           >
-            <Text style={{ color: "white" }}>Geri</Text>
+            <Text style={{ color: "white" }}>Back</Text>
           </TouchableHighlight>
+          <Text style={{ color: "black" }}>{infoText}</Text>
         </View>
       </Modal>
     </View>
@@ -101,5 +136,14 @@ const styles = StyleSheet.create({
     borderColor: "#260E6B",
     backgroundColor: "#FEA500",
     textAlign: "center",
+  },
+  loginText: {
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 40,
+    color: "#FF0000",
+    textShadowRadius: 2,
+    textShadowColor: "black",
+    paddingBottom: "5%",
   },
 });
