@@ -1,40 +1,11 @@
 import React, { useState } from "react";
-import {
-  Text,
-  View,
-  Modal,
-  StyleSheet,
-  TouchableHighlight,
-  TextInput,
-} from "react-native";
-import axios from "axios";
+import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
+import { LoginModal } from "./Modals/LoginModal";
+import { RegisterModal } from "./Modals/RegisterModal";
 
 export const WelcomeScreen = (props) => {
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [infoText, setInfoText] = useState(
-    "Please enter your Username and Password"
-  );
-
-  const submitHandler = async () => {
-    let matchingFlag = false;
-
-    const getUsers = await axios.get("http://192.168.2.240:3000/users"); //localip instead of localhost
-    const found = getUsers.data.find((e) => e.userName === userName);
-    if (typeof found === "undefined") {
-      setInfoText("Username not found");
-    } else {
-      matchingFlag = found.password === password;
-      if (matchingFlag) {
-        //Login Successful
-        setInfoText("Login Succesful");
-        props.getScreenName("HomeScreen");
-      } else {
-        setInfoText("Username and Password do not match");
-      }
-    }
-  };
 
   return (
     <View style={styles.welcome}>
@@ -45,44 +16,22 @@ export const WelcomeScreen = (props) => {
       >
         <Text style={{ color: "white" }}>Login</Text>
       </TouchableHighlight>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isLoginOpen}
-        onRequestClose={() => {
-          setIsLoginOpen(!isLoginOpen);
-        }}
+      <TouchableHighlight
+        style={styles.button}
+        onPress={() => setIsRegisterOpen(true)}
       >
-        <View style={styles.loginModal}>
-          <Text style={styles.loginText}>Login</Text>
-          <TextInput
-            placeholderTextColor={"black"}
-            style={styles.textInput}
-            placeholder="Username"
-            onChangeText={setUserName}
-          />
-          <TextInput
-            placeholderTextColor={"black"}
-            style={[styles.textInput, { marginTop: 5 }]}
-            placeholder="Password"
-            secureTextEntry={true}
-            onChangeText={setPassword}
-          />
-          <TouchableHighlight
-            style={[styles.button, { marginTop: 10 }]}
-            onPress={submitHandler}
-          >
-            <Text style={{ color: "white" }}>Submit</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            style={[styles.button, { marginTop: 5 }]}
-            onPress={() => setIsLoginOpen(false)}
-          >
-            <Text style={{ color: "white" }}>Back</Text>
-          </TouchableHighlight>
-          <Text style={{ color: "black" }}>{infoText}</Text>
-        </View>
-      </Modal>
+        <Text style={{ color: "white" }}>Register</Text>
+      </TouchableHighlight>
+      <LoginModal
+        getScreenName={props.getScreenName}
+        setIsLoginOpen={setIsLoginOpen}
+        isLoginOpen={isLoginOpen}
+      />
+      <RegisterModal
+        getScreenName={props.getScreenName}
+        setIsRegisterOpen={setIsRegisterOpen}
+        isRegisterOpen={isRegisterOpen}
+      />
     </View>
   );
 };
@@ -111,8 +60,9 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: "#260E6B",
     backgroundColor: "#3407B3",
+    marginVertical: 3,
   },
-  loginModal: {
+  modal: {
     flex: 0.8,
     height: "80%",
     borderTopLeftRadius: "15%",
@@ -137,7 +87,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FEA500",
     textAlign: "center",
   },
-  loginText: {
+  modalTitle: {
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 40,
